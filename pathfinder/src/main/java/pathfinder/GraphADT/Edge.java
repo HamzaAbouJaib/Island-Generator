@@ -12,4 +12,16 @@ public class Edge {
         this.weight = weight;
     }
     
+    
+    public Node getN1(){
+        return this.n1;
+    }
+
+    public Node getN2(){
+        return this.n2;
+    }
+
+    public double getWeight(){
+        return this.weight;
+    }
 }

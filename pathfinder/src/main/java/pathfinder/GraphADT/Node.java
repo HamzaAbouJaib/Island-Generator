@@ -1,10 +1,11 @@
 package pathfinder.GraphADT;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Node {
 
-    HashMap<String, String> attributes;
+    Map<String, String> attributes;
 
     // Create a Node with no attributes
     public Node() {
