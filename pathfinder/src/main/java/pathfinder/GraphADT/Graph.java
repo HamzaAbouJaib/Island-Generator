@@ -1,4 +1,4 @@
-package pathfinder.GraphADT;
+package pathfinder.graphadt;
 
 import java.util.ArrayList;
 import java.util.HashMap;

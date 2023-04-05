@@ -1,4 +1,4 @@
-package pathfinder.GraphADT;
+package pathfinder.graphadt;
 
 public class Edge {
 
