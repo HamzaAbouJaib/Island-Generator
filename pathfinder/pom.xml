@@ -13,7 +13,7 @@
   </parent>
 
   <version>1.0</version>
-  <artifactId>2aa4.island.mesh.generator</artifactId>
+  <artifactId>2aa4.graph.pathfinder</artifactId>
   <name>McMaster :: CAS :: 2AA4 :: A4 :: PathFinder</name>
 
   <dependencies>

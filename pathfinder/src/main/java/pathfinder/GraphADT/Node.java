@@ -17,14 +17,12 @@ public class Node {
     }
 
     // Add an attribute to the Node
-    public addAttribute(String key, String value) {
-        this.attributes.put(key, value);   
+    public void addAttribute(String key, String value) {
+        this.attributes.put(key, value);
     }
 
     // Get an attribute from the Node
     public String getAttribute(String key) {
         return this.attributes.get(key);
     }
-
-
 }
