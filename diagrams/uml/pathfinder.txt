@@ -1,0 +1,82 @@
+@startuml
+
+package pathfinder {
+
+package graphadt {
+   class Node {
+      -Map<String, String> attributes
+      +Node()
+      +Node(HashMap<String, String>)
+      +void addAttribute(String, String)
+      +String getAttribute(String)
+   }
+   class Edge {
+      -Node n1
+      -Node n2
+      -double weight
+      +Edge(Node, Node)
+      +Edge(Node, Node, double)
+      +Node getN1()
+      +Node getN2()
+      +double getWeight()
+   }
+   class Graph {
+      -Map<Node, List<Edge>> graph
+      +List<Edge> getNodeEdges(Node)
+      +List<Node> getNodes()
+      +boolean containsNode(Node)
+      +void addNode(Node)
+      +void addEdge(Edge)
+      +void removeNode(Node)
+      +void removeEdge(Edge)
+   }
+
+   Node *-- Graph
+   Node *-- Edge
+   Edge *-- Graph
+
+
+}
+
+package util {
+class Dijkstra {
+      {static} Pair<HashMap<Node, Node>, HashMap<Node, Double>> shortestPathFromSource(Graph, Node)
+   }
+   class MinPriorityQueue {
+      -List<HashMap<T, Double>> minPriorityQueue
+      +int size()
+      +void enqueue(T, Double)
+      +T dequeue()
+      -T findLowestPriority ()
+   }
+   class Pair {
+      -U first
+      -V second
+      +Pair(U, V)
+      +U first()
+      +V second()
+   }
+
+
+}
+
+interface PathFinder {
+   +List<Node> findPath(Graph, Node, Node)
+}
+
+class ShortestPath {
+   +List<Node> findPath(Graph, Node, Node)
+}
+
+PathFinder <|.. ShortestPath
+Graph <-- ShortestPath
+Node <-- ShortestPath
+Dijkstra <.. ShortestPath
+MinPriorityQueue <.. Dijkstra
+Pair <.. Dijkstra
+Graph <-- PathFinder
+Node <-- PathFinder
+Graph <-- Dijkstra
+Node <-- Dijkstra
+}
+@enduml
