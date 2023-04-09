@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Node {
 
-    Map<String, String> attributes;
+    private final Map<String, String> attributes;
 
     // Create a Node with no attributes
     public Node() {

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MinPriorityQueue <T> {
 
-    List<HashMap<T, Double>> minPriorityQueue = new ArrayList<>();
+    private final List<HashMap<T, Double>> minPriorityQueue = new ArrayList<>();
 
 
     public int size() {
