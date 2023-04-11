@@ -7,6 +7,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GraphTest {
 
     @Test
+    public void emptyGraphTest() {
+        Graph g = new Graph();
+        assertEquals(0, g.getNodes().size());
+    }
+
+    @Test
     public void addNodesToGraph(){
         // Create nodes
         Node n1 = new Node();
@@ -36,6 +42,7 @@ public class GraphTest {
 
         // Check if the graph contains the node using the built-in method
         assertTrue(g.containsNode(n1));
+        assertEquals(g.containsNode(n1), g.getNodes().contains(n1));
     }
 
     @Test
