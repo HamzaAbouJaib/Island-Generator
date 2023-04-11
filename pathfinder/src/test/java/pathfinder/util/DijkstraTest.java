@@ -77,13 +77,13 @@ public class DijkstraTest {
         g.addEdge(e5);
         g.addEdge(e6);
 
-        HashMap<Node, Double> path = Dijkstra.shortestPathFromSource(g, n1).second();
+        HashMap<Node, Double> cost = Dijkstra.shortestPathFromSource(g, n1).second();
 
-        assertEquals(0d, path.get(n1));
-        assertEquals(1d, path.get(n2));
-        assertEquals(2d, path.get(n5));
-        assertEquals(3d, path.get(n6));
-        assertEquals(3d, path.get(n4));
+        assertEquals(0d, cost.get(n1));
+        assertEquals(1d, cost.get(n2));
+        assertEquals(2d, cost.get(n5));
+        assertEquals(3d, cost.get(n6));
+        assertEquals(3d, cost.get(n4));
 
     }
 

@@ -35,6 +35,10 @@ public class ShortestPath implements PathFinder{
             shortestPath.add(0, n);
         }
 
+        if (n == null) {
+            return null;
+        }
+
         return shortestPath;
     }
 
