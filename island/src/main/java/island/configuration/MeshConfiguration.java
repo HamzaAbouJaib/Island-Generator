@@ -16,11 +16,14 @@ import ca.mcmaster.cas.se2aa4.a2.io.Structs.Mesh;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Polygon;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Property;
 import ca.mcmaster.cas.se2aa4.a2.io.Structs.Segment;
+import ca.mcmaster.cas.se2aa4.a2.io.Structs.Vertex;
 import island.Tile.River;
 import island.Tile.Tile;
 import island.profiles.altitude.*;
 import island.profiles.soil.*;
 import island.shapes.*;
+import pathfinder.graphadt.Graph;
+import pathfinder.graphadt.Node;
 
 public class MeshConfiguration {
 
@@ -284,8 +287,12 @@ public class MeshConfiguration {
         }
         tiles = hmap.transform(tiles, heatmapView);
 
+        Graph graph = new Graph();
+        CityGen cgen = new CityGen();
+        graph = cgen.transform(originalMesh, tiles, graph, 25, rnd);
+
         // Turn tiles into polygon properties
-        Mesh islandMesh = mutateMesh(originalMesh, tiles, rivers);
+        Mesh islandMesh = mutateMesh(originalMesh, tiles, rivers, graph);
 
         // Create lagoon island if specified
         if (random) {
@@ -310,7 +317,7 @@ public class MeshConfiguration {
             return genSeed;
     }
 
-    private Mesh mutateMesh(Mesh oMesh, List<Tile> tiles, River[] rivers) {
+    private Mesh mutateMesh(Mesh oMesh, List<Tile> tiles, River[] rivers, Graph g) {
         // Extract mesh
         Mesh.Builder mesh = Mesh.newBuilder();
         mesh.addAllVertices(oMesh.getVerticesList()).addAllProperties(oMesh.getPropertiesList());
@@ -344,6 +351,19 @@ public class MeshConfiguration {
                 s.addProperties(color).addProperties(thickness);
             }
             mesh.addSegments(s);
+        }
+
+        // Draw cities onto the mesh
+        Property color = Property.newBuilder().setKey("rgb_color").setValue("180,40,90").build();
+        for (Node n : g.getNodes()) {
+            if (Boolean.parseBoolean(n.getAttribute("is_city"))) {
+                int polygonIndex = Integer.parseInt(n.getAttribute("polygon_index"));
+                Polygon polygon = oMesh.getPolygons(polygonIndex);
+                Vertex centroid = oMesh.getVertices(polygon.getCentroidIdx());
+                Property size = Property.newBuilder().setKey("thickness").setValue(n.getAttribute("size")).build();
+                Vertex vertex = Vertex.newBuilder().setX(centroid.getX()).setY(centroid.getY()).addProperties(size).addProperties(color).build();
+                mesh.addVertices(vertex)  ;
+            }
         }
 
         return mesh.build();
