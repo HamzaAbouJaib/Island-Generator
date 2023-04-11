@@ -35,7 +35,7 @@ public class CityGen {
 
 
     // Connects neighbouring nodes on the graph
-    private Graph createEdgeConnections(Mesh mesh, Graph g) {
+    private void createEdgeConnections(Mesh mesh, Graph g) {
         List<Node> nodes = g.getNodes();
         for (Node n1 : nodes) {
             int pIdx = Integer.parseInt(n1.getAttribute("polygon_index"));
@@ -50,7 +50,6 @@ public class CityGen {
                 }
             }
         }
-        return g;
     }
 
     // Gets the distance between two nodes
