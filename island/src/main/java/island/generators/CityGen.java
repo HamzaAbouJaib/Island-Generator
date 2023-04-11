@@ -20,7 +20,7 @@ public class CityGen {
     public Graph transform(Mesh oMesh, List<Tile> tiles, Graph g, int numOfCities, Random rnd) {
 
         List<Node> validCityLocations = getValidCityLocations(oMesh, tiles, g);
-        g = createEdgeConnections(oMesh, g);
+        createEdgeConnections(oMesh, g);
         numOfCities = (validCityLocations.size() == 0) ? 0 : numOfCities; // Create no cities if there are no valid spots
 
         for (int j = 0; j < numOfCities && validCityLocations.size() != 0; j++) {
@@ -30,7 +30,6 @@ public class CityGen {
             n.addAttribute("size", String.valueOf(rnd.nextInt(7, 12)));  
             validCityLocations.remove(n);
         }
-
         return g;
     }
 
@@ -59,12 +58,11 @@ public class CityGen {
         int pIdx1 = Integer.parseInt(n1.getAttribute("polygon_index"));
         Polygon p1 = mesh.getPolygons(pIdx1);
         Vertex c1 = mesh.getVertices(p1.getCentroidIdx());
-
         int pIdx2 = Integer.parseInt(n2.getAttribute("polygon_index"));
         Polygon p2 = mesh.getPolygons(pIdx2);
         Vertex c2 = mesh.getVertices(p2.getCentroidIdx());
 
-        return Math.pow(Math.sqrt(Math.pow(c1.getX() - c2.getX(), 2)) + Math.sqrt(Math.pow(c1.getY() - c2.getY(), 2)), 2);
+        return Math.sqrt(Math.pow(c1.getX() - c2.getX(), 2)) + Math.sqrt(Math.pow(c1.getY() - c2.getY(), 2));
     }
 
     // Gets land polygons indexes that have no water neighbors

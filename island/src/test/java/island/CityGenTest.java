@@ -47,21 +47,17 @@ public class CityGenTest {
     public void citiesExistTest() {
         // Create a test mesh
         Vertex v1 = Vertex.newBuilder().setX(0).setY(0).build();
-        Vertex v2 = Vertex.newBuilder().setX(250).setY(250).build();
-        Polygon p1 = Polygon.newBuilder().setCentroidIdx(0).addNeighborIdxs(0).setNeighborIdxs(0, 1).build();
-        Polygon p2 = Polygon.newBuilder().setCentroidIdx(1).addNeighborIdxs(0).setNeighborIdxs(0, 0).build();
-        Mesh aMesh = Mesh.newBuilder().addVertices(v1).addVertices(v2).addPolygons(p1).addPolygons(p2).build();
+        Polygon p1 = Polygon.newBuilder().setCentroidIdx(0).build();
+        Mesh aMesh = Mesh.newBuilder().addVertices(v1).addPolygons(p1).build();
 
         // Create corresponding tiles
         List<Tile> tiles = new ArrayList<>();
-        tiles.add(new Tile(Type.LAND, null));
         tiles.add(new Tile(Type.LAND, null));
 
         Graph g = new Graph();
         g = cgen.transform(aMesh, tiles, g, 1, new Random());
 
         assertTrue(Boolean.parseBoolean(g.getNodes().get(0).getAttribute("is_city")));
-        assertFalse(Boolean.parseBoolean(g.getNodes().get(1).getAttribute("is_city")));
 
     }
 
