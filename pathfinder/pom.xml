@@ -25,7 +25,12 @@
     <dependency>
       <groupId>org.locationtech.jts</groupId>
       <artifactId>jts-core</artifactId>
-      <version>1.16.1</version>
+      <version>1.19.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-rasterizer</artifactId>
+      <version>1.16</version>
     </dependency>
     <dependency>
       <groupId>commons-cli</groupId>
