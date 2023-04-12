@@ -27,7 +27,7 @@ public class CityGen {
             // Set random valid tile as a city
             Node n = validCityLocations.get(rnd.nextInt(validCityLocations.size()));
             n.addAttribute("is_city", "true");
-            n.addAttribute("size", String.valueOf(rnd.nextInt(7, 12)));  
+            n.addAttribute("size", String.valueOf(rnd.nextInt(7)+5));
             validCityLocations.remove(n);
         }
         return g;
