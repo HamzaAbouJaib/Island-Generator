@@ -12,6 +12,7 @@ import pathfinder.util.Dijkstra;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class RoadGen {
 
@@ -62,11 +63,65 @@ public class RoadGen {
                     }
                 }
             }
-
-
         }
 
+        // Connect non capital cities/hamlets/villages
+        // Close by cities/hamlets/villages are connected by small roads
+        // Far away cities/hamlets/villages are connected by larger roads
+        for (Node n1 : cities) {
+            color =  Property.newBuilder().setKey("rgb_color").setValue("60,60,60").build();
+            thickness = Property.newBuilder().setKey("thickness").setValue("2").build();
+            // Find the closest city/hamlet/village
+            if (!n1.equals(centralCity)) {
+                Node closestNode = null;
+                double shortestDistance = Double.MAX_VALUE;
+                for (Node n2 : cities) {
+                    if (!n1.equals(n2)) {
+                        if (getDistanceBetweenNodes(oMesh, n1, n2) < shortestDistance) {
+                            shortestDistance = getDistanceBetweenNodes(oMesh, n1, n2);
+                            closestNode = n2;
+                        }
+                    }
+                }
+                // If no city/hamlet/villages exist then skip
+                if (closestNode == null) continue;
+                // Find the shortest path and connect the two cities/hamlet/villages
+                List<Node> path = shortestPathFinder.findPath(g, n1, closestNode);
+                if (path != null) {
+                    if (path.size() < 7) {
+                        color =  Property.newBuilder().setKey("rgb_color").setValue("20,20,20").build();
+                        thickness = Property.newBuilder().setKey("thickness").setValue("1").build();
+                    }
+                    for (int i = 0; i < path.size() - 1; i++) {
+                        Segment.Builder segBuilder = Segment.newBuilder();
+                        segBuilder.setV1Idx(getCentroidIndex(oMesh, path.get(i))).setV2Idx(getCentroidIndex(oMesh, path.get(i + 1)));
+                        segBuilder.addProperties(color).addProperties(thickness);
+                        Segment seg = segBuilder.build();
+                        boolean addRoad = true;
+                        for (Segment s : roads) {
+                            if (s.getV1Idx() == seg.getV1Idx() && s.getV2Idx() == seg.getV2Idx() || s.getV2Idx() == seg.getV1Idx() && s.getV1Idx() == seg.getV2Idx()) {
+                                addRoad = false;
+                                break;
+                            }
+                        }
+                        if (addRoad) {
+                            roads.add(seg);
+                        }
+                    }
+                }
+
+            }
+        }
+
+
         return roads;
+    }
+
+    private double getDistanceBetweenNodes(Mesh mesh, Node n1, Node n2) {
+        Structs.Vertex c1 = mesh.getVertices(getCentroidIndex(mesh, n1));
+        Structs.Vertex c2 = mesh.getVertices(getCentroidIndex(mesh, n2));
+
+        return Math.sqrt(Math.pow(c1.getX() - c2.getX(), 2)) + Math.sqrt(Math.pow(c1.getY() - c2.getY(), 2));
     }
 
     // Gets the centroid index of the respective node

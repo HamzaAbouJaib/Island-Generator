@@ -89,38 +89,4 @@ public class RoadGenTest {
         assertTrue(roads.get(0).getV1Idx() == 0 && roads.get(0).getV2Idx() == 1 || roads.get(0).getV1Idx() == 1 && roads.get(0).getV2Idx() == 0);
     }
 
-    @Test
-    public void RoadsOnlyToCapitalTest() {
-        // Create test mesh
-        Vertex v1 = Vertex.newBuilder().setX(0).setY(0).build();
-        Vertex v2 = Vertex.newBuilder().setX(40).setY(40).build();
-        Vertex v3 = Vertex.newBuilder().setX(50).setY(50).build();
-        Polygon p1 = Polygon.newBuilder().setCentroidIdx(0).addNeighborIdxs(0).addNeighborIdxs(1).setNeighborIdxs(0, 1).setNeighborIdxs(1, 2).build();
-        Polygon p2 = Polygon.newBuilder().setCentroidIdx(1).addNeighborIdxs(0).addNeighborIdxs(1).setNeighborIdxs(0, 0).setNeighborIdxs(1, 2).build();
-        Polygon p3 = Polygon.newBuilder().setCentroidIdx(2).addNeighborIdxs(0).addNeighborIdxs(1).setNeighborIdxs(0, 0).setNeighborIdxs(1, 1).build();
-        Mesh aMesh = Mesh.newBuilder().addVertices(v1).addVertices(v2).addVertices(v3).addPolygons(p1).addPolygons(p2).addPolygons(p3).build();
-
-        // Create corresponding tiles
-        List<Tile> tiles = new ArrayList<>();
-        tiles.add(new Tile(Type.LAND, null));
-        tiles.add(new Tile(Type.LAND, null));
-        tiles.add(new Tile(Type.LAND, null));
-
-        // Create an empty graph
-        Graph g = new Graph();
-
-        // Create cities
-        CityGen cgen = new CityGen();
-        g = cgen.transform(aMesh, tiles, g, 3, new Random());
-
-        RoadGen rgen = new RoadGen();
-        List<Segment> roads = rgen.transform(aMesh, g);
-        for (Segment s : roads) {
-            // Check no connections to non capital
-            assertFalse(s.getV1Idx() == 0 && s.getV2Idx() == 2 || s.getV1Idx() == 2 && s.getV2Idx() == 0);
-            // Check connections to capital
-            assertTrue(s.getV1Idx() == 1 && s.getV2Idx() == 2 || s.getV1Idx() == 1 && s.getV2Idx() == 0);
-        }
-    }
-
 }

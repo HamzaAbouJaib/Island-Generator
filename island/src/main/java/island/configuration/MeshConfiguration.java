@@ -367,13 +367,22 @@ public class MeshConfiguration {
         }
 
         // Draw cities onto the mesh
-        Property color = Property.newBuilder().setKey("rgb_color").setValue("180,40,90").build();
+        Property color;
         for (Node n : g.getNodes()) {
             if (Boolean.parseBoolean(n.getAttribute("is_city"))) {
+                color = Property.newBuilder().setKey("rgb_color").setValue("180,40,90").build();
+                if (Boolean.parseBoolean(n.getAttribute("is_central"))){
+                    color = Property.newBuilder().setKey("rgb_color").setValue("50,40,90").build();
+                }
                 int polygonIndex = Integer.parseInt(n.getAttribute("polygon_index"));
                 Polygon polygon = oMesh.getPolygons(polygonIndex);
                 Vertex centroid = oMesh.getVertices(polygon.getCentroidIdx());
-                Property size = Property.newBuilder().setKey("thickness").setValue(n.getAttribute("size")).build();
+                int citySize = Integer.parseInt(n.getAttribute("size"));
+                if (Boolean.parseBoolean(n.getAttribute("is_central"))) {
+                    citySize += 4;
+                }
+                Property size = Property.newBuilder().setKey("thickness").setValue(String.valueOf(citySize)).build();
+
                 Vertex vertex = Vertex.newBuilder().setX(centroid.getX()).setY(centroid.getY()).addProperties(size).addProperties(color).build();
                 mesh.addVertices(vertex)  ;
             }
