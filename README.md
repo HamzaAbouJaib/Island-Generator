@@ -92,6 +92,9 @@ Number of aquifers must be between 0 and 999:
 Pre-made soil profiles that can be used:  
 ```--soil dry, --soil wet```
 
+Number of cities must be between 0 and 999:  
+```--cities 10```
+
 Pre-made heatmap profiles that can be used:  
 ```--heatmap altitude, --heatmap moisture, --heatmap humidity```
 
@@ -179,6 +182,20 @@ The following is an example of generating and visualizing the heatmap of an elli
 <img src="./diagrams/heatmap.png" width="400" />
 <br>
 Figure 4.3: Altitude heatmap for arctic biomes with 5 lakes, 5 rivers, 5 aquifers and wet soil
+<br><br>
+
+The following is an example of generating and visualizing an ellipse shaped island with four mountains on the edges mesh with 5 lakes, 5 rivers, 5 aquifers, 25 cities, wet soil and a tropical biome:  
+```mvn install```
+
+```java -jar generator/generator.jar generator/sample.mesh -t irregular -d 1000 -w 1000 -n 2000```
+
+```java -jar island/island.jar -i generator/sample.mesh -o island/sample.mesh --shape ellipse --altitude cornerMountains --lakes 5 --rivers 5 --aquifers 5 --cities 25 --soil wet --biome tropical```
+
+```java -jar visualizer/visualizer.jar island/sample.mesh visualizer/sample.svg```
+<br>
+<img src="./diagrams/island_with_cities.png" width="400" />
+<br>
+Figure 4.4: Tropical biome with 5 lakes, 5 rivers, 5 aquifers, 25 cities and wet soil
 <br><br>
 
 
