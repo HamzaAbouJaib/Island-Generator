@@ -63,12 +63,13 @@ public class MeshConfiguration {
         String seed = config.export("seed");
         String numCities = config.export("cities");
         if (numCities == null) numCities = "10";
+        if (Integer.parseInt(numCities) > 999) numCities = "999";
         boolean random = true; // true if seed was not provided
         String configSeed = ""; // seed for configurability options if seed is not provided and only rng seed is generated
         if (seed != null) {
             // seed is of the format 0 0 0 000 000 000 0 0 0 0...0
             // 0:mode 0:shape 0:altitude 000:lakes 000:rivers 000:aquifers 0:soil 0:biome 0:heatmap 0...0:rng seed
-            rnd.setSeed(Long.parseLong(seed.substring(15)));
+            rnd.setSeed(Long.parseLong(seed.substring(18)));
             genSeed = seed;
             random = false;
         }
@@ -292,7 +293,12 @@ public class MeshConfiguration {
         // Add cities
         Graph graph = new Graph();
         CityGen cgen = new CityGen();
-        graph = cgen.transform(originalMesh, tiles, graph, Integer.parseInt(numCities), rnd);
+        if (random) {
+            graph = cgen.transform(originalMesh, tiles, graph, Integer.parseInt(numCities), rnd);
+            configSeed += String.format("%03d", Integer.parseInt(numCities));
+        } else {
+            graph = cgen.transform(originalMesh, tiles, graph, Integer.parseInt(genSeed.substring(15, 18)), rnd);
+        }
 
         // Connected cities with roads
         RoadGen rdGen = new RoadGen();
