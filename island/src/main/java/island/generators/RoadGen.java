@@ -33,6 +33,9 @@ public class RoadGen {
                 cities.add(n);
             }
         }
+
+        // Label the central city as central
+        centralCity.addAttribute("is_central", "true");
         cities.remove(centralCity);
 
         // Create roads (segments) connecting the cities to the central city

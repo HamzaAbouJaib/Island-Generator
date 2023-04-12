@@ -82,6 +82,7 @@ public class CityGen {
         attributes.put("polygon_index", Integer.toString(idx));
         attributes.put("is_city", Boolean.toString(isCity));
         attributes.put("size", Integer.toString(size));
+        attributes.put("is_central", "false");
         return new Node(attributes);
     }
 
