@@ -1,5 +1,4 @@
 @startuml
-
 package pathfinder {
 
 package graphadt {
@@ -57,7 +56,6 @@ class Dijkstra {
       +V second()
    }
 
-
 }
 
 interface PathFinder {
@@ -70,13 +68,10 @@ class ShortestPath {
 
 PathFinder <|.. ShortestPath
 Graph <-- ShortestPath
-Node <-- ShortestPath
 Dijkstra <.. ShortestPath
 MinPriorityQueue <.. Dijkstra
 Pair <.. Dijkstra
 Graph <-- PathFinder
-Node <-- PathFinder
 Graph <-- Dijkstra
-Node <-- Dijkstra
 }
 @enduml
