@@ -61,6 +61,8 @@ public class MeshConfiguration {
         String heatmapView = config.export("heatmap");
         if (heatmapView == null) heatmapView = "";
         String seed = config.export("seed");
+        String numCities = config.export("cities");
+        if (numCities == null) numCities = "10";
         boolean random = true; // true if seed was not provided
         String configSeed = ""; // seed for configurability options if seed is not provided and only rng seed is generated
         if (seed != null) {
@@ -290,7 +292,7 @@ public class MeshConfiguration {
         // Add cities
         Graph graph = new Graph();
         CityGen cgen = new CityGen();
-        graph = cgen.transform(originalMesh, tiles, graph, 10, rnd);
+        graph = cgen.transform(originalMesh, tiles, graph, Integer.parseInt(numCities), rnd);
 
         // Connected cities with roads
         RoadGen rdGen = new RoadGen();
