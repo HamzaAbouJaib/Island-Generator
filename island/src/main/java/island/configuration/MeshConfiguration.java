@@ -287,12 +287,17 @@ public class MeshConfiguration {
         }
         tiles = hmap.transform(tiles, heatmapView);
 
+        // Add cities
         Graph graph = new Graph();
         CityGen cgen = new CityGen();
-        graph = cgen.transform(originalMesh, tiles, graph, 25, rnd);
+        graph = cgen.transform(originalMesh, tiles, graph, 10, rnd);
+
+        // Connected cities with roads
+        RoadGen rdGen = new RoadGen();
+        List<Segment> roads = rdGen.transform(originalMesh, graph);
 
         // Turn tiles into polygon properties
-        Mesh islandMesh = mutateMesh(originalMesh, tiles, rivers, graph);
+        Mesh islandMesh = mutateMesh(originalMesh, tiles, rivers, graph, roads);
 
         // Create lagoon island if specified
         if (random) {
@@ -317,7 +322,7 @@ public class MeshConfiguration {
             return genSeed;
     }
 
-    private Mesh mutateMesh(Mesh oMesh, List<Tile> tiles, River[] rivers, Graph g) {
+    private Mesh mutateMesh(Mesh oMesh, List<Tile> tiles, River[] rivers, Graph g, List<Segment> roads) {
         // Extract mesh
         Mesh.Builder mesh = Mesh.newBuilder();
         mesh.addAllVertices(oMesh.getVerticesList()).addAllProperties(oMesh.getPropertiesList());
@@ -364,6 +369,11 @@ public class MeshConfiguration {
                 Vertex vertex = Vertex.newBuilder().setX(centroid.getX()).setY(centroid.getY()).addProperties(size).addProperties(color).build();
                 mesh.addVertices(vertex)  ;
             }
+        }
+
+        // Add roads to the mesh
+        for (Segment s : roads) {
+            mesh.addSegments(s);
         }
 
         return mesh.build();
