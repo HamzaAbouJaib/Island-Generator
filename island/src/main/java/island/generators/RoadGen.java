@@ -77,12 +77,14 @@ public class RoadGen {
     private Node getCentralCity(Graph g) {
         Node centralNode = null;
         double minMaxPath = Double.MAX_VALUE;
+        double maxSize = 0;
         for (Node n1 : g.getNodes()) {
             if (Boolean.parseBoolean(n1.getAttribute("is_city"))) {
                 HashMap<Node, Double> cost = Dijkstra.shortestPathFromSource(g, n1).second();
                 double maxPath = 0;
                 for (Node n2 : cost.keySet()) {
-                    if (Boolean.parseBoolean(n2.getAttribute("is_city")) && cost.get(n2) != Double.MAX_VALUE) {
+                    double size = Double.parseDouble(n2.getAttribute("size"));
+                    if (Boolean.parseBoolean(n2.getAttribute("is_city")) && cost.get(n2) != Double.MAX_VALUE && size >= maxSize) {
                         maxPath = Math.max(maxPath, cost.get(n2));
                     }
                 }
