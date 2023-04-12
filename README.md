@@ -193,11 +193,10 @@ The following is an example of generating and visualizing an ellipse shaped isla
 
 ```java -jar visualizer/visualizer.jar island/sample.mesh visualizer/sample.svg```
 <br>
-<img src="./diagrams/island_with_cities.png" width="400" />
+<img src="./diagrams/cities2.png" width="400" />
 <br>
 Figure 4.4: Tropical biome with 5 lakes, 5 rivers, 5 aquifers, 25 cities and wet soil
 <br><br>
-
 
 ## How to contribute to the project
 
