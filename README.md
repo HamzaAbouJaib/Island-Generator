@@ -255,3 +255,13 @@ If a feature works as intended without bugs and the code is clean and concise, i
 |  F41  | Attribute a seed for each random configuration and island generation                                                                          | Qamrosh | 3/26/2023 | 3/26/2023 | D      |
 |  F42  | Allow user to input a seed that will reproduce the same island generation method                                                              | Qamrosh | 3/26/2023 | 3/26/2023 | D      |
 |  F43  | Introduce user configurable heatmaps for humidity, moisture, and vegetation                                                                   | Qamrosh | 3/26/2023 | 3/26/2023 | D      |
+|  F44  | Introduce nodes with attributes                                                                                                               | Hamza | 3/26/2023 | 3/26/2023 | D      |
+|  F45  | Introduce edges with attributes                                                                                                               | Hamza | 3/26/2023 | 3/26/2023 | D      |
+|  F46  | Create graph ADT that uses nodes and edges                                                                                                    | Hamza | 3/26/2023 | 3/26/2023 | D      |
+|  F47  | Create a pathfinder algorithm to find the shortest path between two nodes                                                                     | Hamza | 3/26/2023 | 3/26/2023 | D      |
+|  F48  | Add cities to the island generator project, cities are mapped to centroids                                                                    | Hamza | 3/26/2023 | 3/26/2023 | D      |
+|  F49  | Create a star network of roads connecting cities                                                                                              | Hamza | 3/26/2023 | 3/26/2023 | D      |
+|  F50  | Number of cities can be controlled via command line arguments                                                                                 | Hamza | 3/26/2023 | 3/26/2023 | D      |
+|  F51  | Reproduce cities using seed                                                                                                                   | Hamza | 3/26/2023 | 3/26/2023 | D      |
+|  F52  | Add secondary and tertiary roads that connect hamlets, villages and cities together                                                           | Hamza | 3/26/2023 | 3/26/2023 | D      |
+
