@@ -1,4 +1,4 @@
-# Assignment A2: Mesh Generator
+# Island Generator
 
 - Ali Virk [virka9@mcmaster.ca]
 - Hamza Abou Jaib [aboujaih@mcmaster.ca]
